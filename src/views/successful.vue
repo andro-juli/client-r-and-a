@@ -2,38 +2,30 @@
   <div class="user-dash">
     <!-- <h1>This is a single user {{ $route.params.id }}</h1> -->
     <div class="dashboard-menu">
-      <div class="profile-layout">
-        <div class="profile-picture">
-          <img src="../assets/me.jpg" alt="" />
-        </div>
-        <div>
-          <p class="profile-name">Kara</p>
-          <p class="profile-email">Kara@gmail.com</p>
-        </div>
-      </div>
+      <UserP />
       <div class="main-menu">
         <div>
           <li><img src="../assets/dashboard.svg" alt="" /> Dashboard</li>
           <li><img src="../assets/assessment.svg" alt="" />Assessment</li>
         </div>
-        <div class="logout-div">
-          <li><img src="../assets/logout.svg" alt="" />Log out</li>
-        </div>
+        <Logout />
       </div>
     </div>
     <div class="dashboard-body-container">
       <div class="dashboard-body">
         <div class="header-container">
-          <div>
+          <div class="thank-you">
             <h2>Take Assessment</h2>
             <p>
               Thank you!
             </p>
           </div>
           <div class="timer">
-            <!-- <div id="countdownExample">
-              <div class="values">30:00</div>
-            </div> -->
+            <div class="timer-text-cont"><h3 class="timer-text">Timer</h3></div>
+
+            <h2 class="zero-timer">
+              00 <span class="min">min</span>:000 <span class="min">sec</span>
+            </h2>
           </div>
         </div>
         <div class="dashboard-body-sub">
@@ -57,74 +49,39 @@
 </template>
 
 <script>
+import UserP from "@/components/UserP.vue";
+import Logout from "@/components/Logout.vue";
 export default {
   name: "user-dash",
+  components: {
+    UserP,
+    Logout,
+  },
 };
 </script>
 
 <style scoped>
 .user-dash {
   width: 100%;
-  height: 100vh;
+  height: 120vh;
   display: flex;
 }
 .dashboard-menu {
   width: 20%;
-  height: 100vh;
+  height: 120vh;
   background: #ffffff;
   box-shadow: 0px 5px 15px rgba(33, 31, 38, 0.05);
   border-radius: 8px;
 }
 .dashboard-body-container {
   width: 80%;
-  height: 100vh;
+  height: 120vh;
   background: #fdfdff;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.profile-email {
-  font-family: Lato;
-  font-style: italic;
-  font-weight: normal;
-  font-size: 16px;
-  line-height: 19px;
-  letter-spacing: -0.02em;
-  color: #ffffff;
-  text-align: center;
-}
-.profile-name {
-  font-family: Lato;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 18px;
-  line-height: 24px;
-  letter-spacing: -0.02em;
-  color: #ffffff;
-  padding: 5px;
-  text-align: center;
-}
-.profile-layout {
-  width: 100%;
-  height: 30vh;
-  background: #7557d3;
-  color: #ffffff;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-.profile-picture {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background-color: #ffffff;
-}
-.profile-picture img {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-}
+
 .main-menu {
   padding: 50px;
 }
@@ -162,15 +119,35 @@ export default {
   line-height: 19px;
   color: #2b3c4e;
 }
+.timer-text {
+  font-family: Lato;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  color: #4f4f4f;
+}
+.timer-text-cont {
+  display: flex;
+  justify-content: flex-start;
+}
 .dashboard-body {
-  width: 80%;
-  height: 80vh;
+  width: 90%;
+  height: 100vh;
   margin: auto;
+}
+.timer {
+  width: 25%;
+}
+.thank-you {
+  width: 70%;
 }
 .header-container {
   padding-top: 2rem;
   height: 25vh;
   display: flex;
+
+  justify-content: space-between;
 }
 .header-container h2 {
   font-family: Lato;
@@ -194,6 +171,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: 50px;
 }
 .confetti-container {
   width: 148px;

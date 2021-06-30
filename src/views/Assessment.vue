@@ -2,29 +2,29 @@
   <div class="user-dash">
     <!-- <h1>This is a single user {{ $route.params.id }}</h1> -->
     <div class="dashboard-menu">
-      <div class="profile-layout">
-        <div class="profile-picture">
-          <img src="../assets/me.jpg" alt="" />
-        </div>
-        <div>
-          <p class="profile-name">Kara</p>
-          <p class="profile-email">Kara@gmail.com</p>
-        </div>
-      </div>
+      <UserP />
       <div class="main-menu">
         <div>
-          <li><img src="../assets/dashboard.svg" alt="" /> Dashboard</li>
-          <li><img src="../assets/assessment.svg" alt="" />Assessment</li>
+          <li>
+            <img src="../assets/dashboard.svg" alt="" />
+            <router-link :to="{ name: 'SingleDashboard' }"
+              >Dashboard</router-link
+            >
+          </li>
+          <li>
+            <img src="../assets/assessment.svg" alt="" /><router-link
+              :to="{ name: 'Assessment' }"
+              >Assessment</router-link
+            >
+          </li>
         </div>
-        <div class="logout-div">
-          <li><img src="../assets/logout.svg" alt="" />Log out</li>
-        </div>
+        <Logout />
       </div>
     </div>
     <div class="dashboard-body-container">
       <div class="dashboard-body">
         <div class="header-container">
-          <div>
+          <div class="take-A">
             <h2>Take Assessment</h2>
             <p>
               Click the button below to start assessment, you have limited time
@@ -32,17 +32,23 @@
             </p>
           </div>
           <div class="timer">
-            <!-- <div id="countdownExample">
-              <div class="values">30:00</div>
-            </div> -->
+            <div class="timer-text-cont"><h3 class="timer-text">Timer</h3></div>
+
+            <h2 class="zero-timer">
+              00 <span class="min">min</span>:000 <span class="min">sec</span>
+            </h2>
           </div>
         </div>
         <div class="sand-clock-container">
-          <img src="../assets/Flat hourglass.gif" alt="" />
+          <img src="../assets/timer.png" alt="timer" id="loading" />
           <p>We have 4 days left until the next assessment</p>
           <p>Watch this space</p>
           <router-link :to="{ name: 'Questions' }"
-            ><button class="assessment-btn">
+            ><button
+              v-on:click="countdown = 5"
+              type="button"
+              class="assessment-btn"
+            >
               Take Assessment
             </button></router-link
           >
@@ -53,79 +59,39 @@
 </template>
 
 <script>
-import Quiz from "@/components/Quiz.vue";
+import UserP from "@/components/UserP.vue";
+import Logout from "@/components/Logout.vue";
 export default {
   name: "user-dash",
   components: {
-    Quiz,
+    UserP,
+    Logout,
   },
-  props: ["User"],
 };
 </script>
 
 <style scoped>
 .user-dash {
   width: 100%;
-  height: 100vh;
+  height: 120vh;
   display: flex;
 }
 .dashboard-menu {
   width: 20%;
-  height: 100vh;
+  height: 120vh;
   background: #ffffff;
   box-shadow: 0px 5px 15px rgba(33, 31, 38, 0.05);
   border-radius: 8px;
 }
 .dashboard-body-container {
   width: 80%;
-  height: 100vh;
+  height: 120vh;
   background: #fdfdff;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.profile-layout {
-  width: 100%;
-  height: 30vh;
-  background: #7557d3;
-  color: #ffffff;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-.profile-email {
-  font-family: Lato;
-  font-style: italic;
-  font-weight: normal;
-  font-size: 16px;
-  line-height: 19px;
-  letter-spacing: -0.02em;
-  color: #ffffff;
-  text-align: center;
-}
-.profile-name {
-  font-family: Lato;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 18px;
-  line-height: 24px;
-  letter-spacing: -0.02em;
-  color: #ffffff;
-  padding: 5px;
-  text-align: center;
-}
-.profile-picture {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background-color: #ffffff;
-}
-.profile-picture img {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-}
+
 .main-menu {
   padding: 50px;
 }
@@ -139,17 +105,18 @@ export default {
   color: #2b3c4e;
   padding: 10px;
 }
+a {
+  text-decoration: none;
+}
 .main-menu img {
   padding-right: 10px;
-}
-.logout-div {
-  margin-top: 20px;
 }
 
 .header-container {
   padding-top: 2rem;
   height: 25vh;
   display: flex;
+  justify-content: space-between;
 }
 .header-container h2 {
   font-family: Lato;
@@ -169,15 +136,41 @@ export default {
   color: #2b3c4e;
 }
 .dashboard-body {
-  width: 80%;
+  width: 90%;
   height: 100vh;
   margin: auto;
-  border: 1px solid red;
+}
+.timer {
+  width: 20%;
+}
+.timer-text-cont {
+  display: flex;
+  justify-content: flex-start;
+}
+.timer-text {
+  font-family: Lato;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  color: #4f4f4f;
+}
+.take-A {
+  width: 70%;
+}
+.min {
+  font-family: Lato;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 14px;
+  text-align: center;
+  color: #4f4f4f;
 }
 .sand-clock-container {
   width: 60%;
   height: 50vh;
-  border: 1px solid red;
+
   margin: auto;
   display: flex;
   flex-direction: column;
@@ -188,6 +181,18 @@ export default {
   width: 60px;
   height: 72px;
   margin: 10px;
+}
+
+#loading {
+  animation: rotation 2s infinite linear;
+}
+@keyframes rotation {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(359deg);
+  }
 }
 .sand-clock-container p {
   font-family: Lato;

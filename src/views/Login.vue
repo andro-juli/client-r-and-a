@@ -13,7 +13,7 @@
             <div class="input-container">
               <label for="email" class="label">Email Address</label>
               <input
-                v-model="details.email"
+                v-model="email"
                 type="text"
                 id="email"
                 name="email"
@@ -23,7 +23,7 @@
             <div class="input-container">
               <label for="password" class="label">Password</label>
               <input
-                v-model="details.password"
+                v-model="password"
                 type="password"
                 id="pword"
                 name="password"
@@ -60,10 +60,9 @@ export default {
 
   data() {
     return {
-      details: {
-        email: "",
-        password: "",
-      },
+      email: "",
+      password: "",
+
       showError: false,
     };
   },
@@ -71,13 +70,16 @@ export default {
   methods: {
     ...mapActions(["LogIn"]),
     async loginUser() {
-      const User = new FormData();
-      User.append("email", this.details.email);
-      User.append("password", this.details.password);
+      this.User = {
+        email: this.email,
+        password: this.password,
+      };
+      JSON.stringify(this.User);
+      // localStorage.setItem("user", JSON.stringify(this.User));
       try {
-        await this.LogIn(User);
-        this.$router.push("/dashboard");
-        this.showError = false;
+        await this.LogIn(this.User);
+
+        this.$router.push("/application_form");
       } catch (error) {
         this.showError = true;
       }
@@ -179,6 +181,7 @@ export default {
   border: 1.5px solid #bdbdbd;
   box-sizing: border-box;
   border-radius: 4px;
+  padding: 6px;
 }
 .label {
   font-family: Lato;

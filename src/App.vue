@@ -1,10 +1,6 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <div class="auth-wrapper">
-        <!-- <router-view :user="user" /> -->
-      </div>
-    </div>
+    <div id="nav"></div>
     <router-view />
   </div>
 </template>
@@ -14,24 +10,6 @@
 
 export default {
   name: "app",
-
-  // data() {
-  //   return {
-  //     user: null,
-  //   };
-  // },
-
-  // async created() {
-  //   const response = await fetch("user", {
-  //     method: "GET",
-  //     headers: {
-  //       Authorization: localStorage.getItem("token"),
-  //     },
-  //   });
-  //   console.log(response);
-
-  //   this.$store.dispatch("user", response.data);
-  // },
 };
 </script>
 

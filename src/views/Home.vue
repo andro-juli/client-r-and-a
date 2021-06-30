@@ -19,17 +19,6 @@
                 <div class="anc-tags">
                   <router-link :to="{ name: 'Home' }">Home</router-link>
                   <router-link :to="{ name: 'Login' }">Sign in</router-link>
-                  <span v-if="isLoggedIn">
-                    <a @click="logout">Logout</a>
-                  </span>
-                  <span v-else>
-                    <router-link to="/signup">Register</router-link> |
-                    <router-link to="/login">Login</router-link>
-                  </span>
-                  <!-- <h4 v-if="user">
-                    Hi, {{ user.firstname }} {{ user.lastname }}
-                  </h4>
-                  <h4 v-if="!user">Hi, You are not logged in!</h4> -->
                 </div>
               </div>
             </nav>

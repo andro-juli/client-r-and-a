@@ -8,6 +8,7 @@ import DashboardSingle from "../views/Dashboard/SingleUser.vue";
 import Assessment from "../views/Assessment.vue";
 import Questions from "../views/questions.vue";
 import Successful from "../views/successful.vue";
+import Application_form from "../views/Application_form.vue";
 // import SingleDashboard from "../views/SingleDashboard.vue";
 import store from "../store";
 
@@ -58,6 +59,12 @@ const routes = [
     component: Successful,
   },
   {
+    path: "/application_form",
+    name: "Application_form",
+    component: Application_form,
+    meta: { requiresAuth: true },
+  },
+  {
     path: "/dashboard",
     name: "dashboard",
     component: Dashboard,
@@ -89,16 +96,12 @@ router.beforeEach((to, from, next) => {
     next();
   }
 });
+
 // Authorised Users
 // router.beforeEach((to, from, next) => {
 //   if (to.matched.some((record) => record.meta.guest)) {
 //     if (store.getters.isAuthenticated) {
-//       next(`${<router-link
-//             to="{
-//               name: 'dashboard-single-user',
-//               params: { id: 'dashboard-single-user' },
-//             }"
-//           >{{User}}</router-link>}`);
+//       next(this.$router.push("/singledashboard"));
 //       return;
 //     }
 //     next();

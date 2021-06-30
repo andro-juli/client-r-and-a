@@ -1,73 +1,112 @@
 <template>
   <div class="quiz">
     <div class="slide-container">
-      <carousel
-        :per-page="1"
-        :navigation-enabled="true"
-        :paginationEnabled="false"
-        ref="productDetails"
-      >
+      <carousel :per-page="1" :paginationEnabled="false" ref="productDetails">
         <!-- <div>  :navigation-next-label="nextLabel"
         :navigation-prev-label="prevLabel"</div> -->
-        <slide v-for="qst in questions" :key="qst.id" :qst="qst">
+        <slide
+          v-for="(qst, index) in questions"
+          :key="index"
+          v-show="index === questionindex"
+        >
           <h4>Question {{ qst.id }}</h4>
-          <p>{{ qst.question_text }}</p>
+          <p class="qst-text" id="qst_text">{{ qst.question_text }}</p>
           <div class="answers-container">
-            <div>
-              <input
-                type="radio"
-                id="answer-option1"
-                name="answer1"
-                value="option 1"
-              />
-              <label for="html">{{ qst.answers }}</label>
-            </div>
-            <div>
-              <input
-                type="radio"
-                id="answer-options2"
-                name="answer2"
-                value="option 2"
-              />
-              <label for="css">{{ qst.answers }}</label>
-            </div>
-            <div>
-              <input
-                type="radio"
-                id="answer-options3"
-                name="answer3"
-                value="option 3"
-              />
-              <label for="javascript">{{ qst.answers }}</label>
-            </div>
-            <div>
-              <input
-                type="radio"
-                id="answer-options4"
-                name="answer4"
-                value="option 4"
-              />
-              <label for="javascript">{{ qst.answers }}</label>
+            <div class="options-container">
+              <ul>
+                <li>
+                  <div class="dot-div-container">
+                    <div class="dot-div"></div>
+                  </div>
+                  <label for="radinput" class="optn">
+                    <!-- bind the options to the array index of the answers array that matches this index -->
+                    <input
+                      type="radio"
+                      id="radinput"
+                      name="answer"
+                      v-model="answers[index]"
+                      :value="qst.answera"
+                    />
+                    <span class="optn-index">A.</span>{{ qst.answera }}
+                  </label>
+                </li>
+                <li>
+                  <div class="dot-div-container">
+                    <div class="dot-div"></div>
+                  </div>
+
+                  <label class="optn">
+                    <!-- bind the options to the array index of the answers array that matches this index -->
+                    <input
+                      type="radio"
+                      id="radinput"
+                      name="answer"
+                      v-model="answers[index]"
+                      :value="qst.answerb"
+                    />
+                    <span class="optn-index">B.</span>{{ qst.answerb }}
+                  </label>
+                </li>
+                <li>
+                  <div class="dot-div-container">
+                    <div class="dot-div"></div>
+                  </div>
+                  <label class="optn">
+                    <!-- bind the options to the array index of the answers array that matches this index -->
+                    <input
+                      type="radio"
+                      id="radinput"
+                      name="answer"
+                      v-model="answers[index]"
+                      :value="qst.answerc"
+                    />
+                    <span class="optn-index">C.</span>{{ qst.answerc }}
+                  </label>
+                </li>
+                <li>
+                  <div class="dot-div-container">
+                    <div class="dot-div"></div>
+                  </div>
+                  <label class="optn">
+                    <!-- bind the options to the array index of the answers array that matches this index -->
+                    <input
+                      type="radio"
+                      id="radinput"
+                      name="answer"
+                      v-model="answers[index]"
+                      :value="qst.answerd"
+                    />
+                    <span class="optn-index">D.</span>{{ qst.answerd }}
+                  </label>
+                </li>
+              </ul>
             </div>
           </div>
-          <div class="btn-container">
+          <div v-if="questionindex < questions.length" class="btn-container">
             <div>
-              <button id="prev">
+              <button v-if="questionindex > 0" v-on:click="prev" id="prev">
                 Previous
               </button>
             </div>
             <div>
-              <button id="next">
+              <button v-on:click="next" id="next">
                 Next
               </button>
             </div>
           </div>
         </slide>
       </carousel>
+      <span v-if="questionindex == questions.length"
+        >Your total score is {{ score }} / {{ questions.length }}</span
+      >
     </div>
     <div class="finish">
       <router-link :to="{ name: 'Successful' }"
-        ><button class="finish-btn">
+        ><button
+          v-show="questionindex <= questions.length - 1"
+          @click="submitQuiz"
+          class="finish-btn"
+        >
           Finish
         </button></router-link
       >
@@ -77,39 +116,83 @@
 
 <script>
 import { Carousel, Slide } from "vue-carousel";
+import { mapState } from "vuex";
+
+// var quiz_qsts = this.$store.state.auth.questions.data;
+
 export default {
   name: "Quiz",
   components: {
     Carousel,
     Slide,
   },
+  data: () => {
+    return {
+      questionindex: 0,
+      until: true,
+
+      user: {
+        score: [],
+      },
+    };
+  },
+
+  async mounted() {
+    this.$store.dispatch("GetQuestions");
+
+    await this.timed();
+  },
+
+  methods: {
+    next: function() {
+      this.questionindex++;
+    },
+    prev: function() {
+      this.questionindex--;
+    },
+
+    timed() {
+      this.times = setInterval(() => this.countdown(), 1000);
+    },
+
+    submitQuiz() {
+      for (let i = 0; i < this.questions.length; i++) {
+        this.user.push(this.score);
+      }
+      this.time = 0;
+      this.$router.push({ name: "Successful" });
+    },
+
+    countdown() {
+      if (this.time > 0) {
+        this.time--;
+      } else if (this.time == 1) {
+        this.submitQuiz();
+      }
+    },
+  },
 
   computed: {
+    ...mapState(["setQuestions"]),
     questions() {
       return this.$store.state.auth.questions.data;
     },
-    answers() {
-      const array = this.$store.state.auth.questions.data.answers;
-      console.log(array);
-      for (var i = 0; i < array.length; i++) {
-        console.log(array[i]);
-        //Do something
-      }
-    },
-    anschoice() {
-      const answers = this.$store.state.auth.questions.data.answers;
-      Object.entries(answers).forEach(([value]) => console.log(` ${value}`));
-    },
-  },
-  // data() {
-  //   return {
-  //     nextLabel: S,
-  //     prevLabel: S,
-  //   };
-  // },
 
-  mounted() {
-    this.$store.dispatch("GetQuestions");
+    // Calculate total score of quiz person
+    score: function() {
+      var total = 0;
+      for (var i = 0; i < this.answers.length; i++) {
+        if (this.answers[i] == this.questions[i].correct_answer) {
+          total += 1;
+        }
+      }
+      return total;
+    },
+    answers: function() {
+      //create an array of the length of the questions, and assign them to an empty value.
+      var ans = Array(this.questions.length).fill("");
+      return ans;
+    },
   },
 };
 </script>
@@ -124,12 +207,55 @@ export default {
   justify-content: center;
   align-items: center;
 }
-/* .VueCarousel-slide {
+ul {
   width: 100%;
+  /* border: 1px solid red; */
+  height: 20vh;
+}
+li {
+  list-style-type: none;
+  /* border: 1px solid green; */
+  display: flex;
+  width: 100%;
+  height: 33px;
+}
+/* li:active {
+  background: #31d283;
 } */
+label {
+  width: 80%;
+  /* border: 1px solid magenta; */
+  display: block;
+}
+
+.dot-div {
+  width: 8px;
+  height: 8px;
+  border: 1px solid #2b3c4e;
+}
+.optn-index {
+  margin-right: 5px;
+}
+
+input[type="radio"] {
+  /* visibility: hidden; */
+  width: 8px;
+  height: 8px;
+  border: 1px solid #2b3c4e;
+  box-sizing: border-box;
+  background: #31d283;
+}
+
+.dot-div-container {
+  width: 15%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .slide-container {
-  width: 60%;
-  height: 50vh;
+  width: 70%;
+  height: 55vh;
+  /* border: 1px solid black; */
 }
 .slide-container h4 {
   font-family: Lato;
@@ -141,7 +267,17 @@ export default {
   text-align: center;
   padding: 10px;
 }
-.slide-container p {
+.options-container {
+  display: flex;
+  width: 100%;
+  height: 30vh;
+  padding: 3px;
+  justify-content: space-evenly;
+  align-items: center;
+  /* border: 1px solid red; */
+}
+
+.qst-text {
   font-family: Lato;
   font-style: italic;
   font-weight: bold;
@@ -151,25 +287,20 @@ export default {
   text-align: center;
   padding: 10px;
 }
-label {
+
+.optn {
   font-family: Lato;
   font-style: italic;
   font-weight: 500;
   font-size: 16px;
   line-height: 19px;
   color: #2b3c4e;
-  padding-left: 15px;
+  text-align: center;
 }
-input[type="radio"] {
-  width: 8px;
-  height: 8px;
-  border: 1px solid #2b3c4e;
 
-  box-sizing: border-box;
-}
 .answers-container {
   width: 100%;
-  height: 20vh;
+  height: 30vh;
   display: flex;
   grid-gap: 5px;
   flex-direction: column;

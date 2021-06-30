@@ -2,31 +2,27 @@
   <div class="app-form">
     <div class="logo-title">
       <div class="form-logo">
-        <img src="../../assets/app-form-logo.svg" alt="form-logo" />
+        <img src="../assets/app-form-logo.svg" alt="form-logo" />
       </div>
       <div>
         <h1 class="app-title">Application Form</h1>
       </div>
     </div>
     <div class="enclosure">
-      <form
-        method="post"
-        @submit.prevent="applicationForm"
-        enctype="multipart/form-data"
-      >
+      <form @submit.prevent="applicationForm" enctype="multipart/form-data">
         <div class="fileup">
           <div class="upload-btn-wrapper">
             <button class="btns">+ Upload CV</button>
             <input
               type="file"
-              name="file"
+              name="files"
               ref="file"
               @change="handleFileUpload"
             />
             <button class="btns">+ Upload Photos</button>
             <input
               type="file"
-              name="file"
+              name="files"
               ref="file"
               @change="handleFileUpload"
             />
@@ -160,7 +156,7 @@ export default {
   name: "app-form",
   data() {
     return {
-      file: "",
+      files: "",
       firstname: "",
       lastname: "",
       email: "",
@@ -169,28 +165,69 @@ export default {
       university: "",
       program: "",
       CGPA: "",
+      message: "",
+      profile: [],
     };
   },
 
+  async mounted() {
+    await this.fetchProfile()[
+      ((this.profile = await this.getProfile),
+      (this.firstname = await this.getProfile.firstname),
+      (this.lastname = await this.getProfile.lastname),
+      (this.email = await this.getProfile.email))
+    ];
+  },
+
   computed: {
-    ...mapGetters({ allForms: "StateForms", User: "StateUser" }),
+    ...mapGetters(["StateForms", "StateUser", "getProfile"]),
   },
 
   methods: {
-    ...mapActions(["CreateForm"]),
+    ...mapActions(["CreateForm", "fetchProfile"]),
+
+    handleFileUpload() {
+      this.files = this.$refs.file.files[0];
+
+      console.log(this.files);
+
+      const allowedTypes = [
+        "application/pdf",
+        "image/png",
+        "image/jpg",
+        "image/jpeg",
+        "application/docx",
+      ];
+      if (!allowedTypes.includes(this.files.type)) {
+        alert("File type is wrong");
+      } else if (this.files.size > 500000) {
+        this.message = "File size is Too Large, max size is 500kb";
+      } else {
+        this.message = "";
+      }
+    },
+
     async applicationForm() {
-      this.forms = {
-        firstname: this.firstname,
-        lastname: this.lastname,
-        email: this.email,
-        DOB: this.DOB,
-        address: this.address,
-        university: this.university,
-        program: this.program,
-        CGPA: this.CGPA,
-      };
+      const form = new FormData();
+
+      // for (var i = 0; i < this.files.length; i++) {
+      //   this.files = this.files[i];
+      //   form.append("files[" + i + "]", this.files);
+      // }
+
+      form.append("files", this.files);
+      form.append("firstname", this.firstname);
+      form.append("lastname", this.lastname);
+      form.append("email", this.email);
+      form.append("DOB", this.DOB);
+      form.append("address", this.address);
+      form.append("university", this.university);
+      form.append("program", this.program);
+      form.append("CGPA", this.CGPA);
+
+      console.log(form);
       try {
-        await this.CreateForm(this.forms);
+        await this.CreateForm(form);
         this.$router.push("singledashboard");
       } catch (error) {
         throw "Sorry you can't fill a form now";
@@ -341,6 +378,9 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.input-box input {
+  padding: 10px;
 }
 input:focus {
   background: white;

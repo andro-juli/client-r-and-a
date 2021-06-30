@@ -122,7 +122,7 @@ export default {
         await this.Signup(this.details);
         console.log(this.details);
         JSON.stringify(this.details);
-        this.$router.push("/dashboard");
+        this.$router.push("/login");
         this.showError = false;
       } catch (error) {
         this.showError = true;
@@ -220,6 +220,7 @@ export default {
   box-sizing: border-box;
   border-radius: 4px;
   margin: 10px 0;
+  padding: 6px;
 }
 .label {
   font-family: Lato;
