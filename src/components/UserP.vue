@@ -1,11 +1,15 @@
 <template>
   <div id="app">
     <div class="profile-layout">
-      <div v-if="SingleApp.files" class="profile-picture">
-        <img :src="SingleApp.files" alt="" />
+      <div class="profile-picture">
+        <img :src="getProfilePhoto()" alt="" />
       </div>
       <div class="username">
-        <p class="profile-name">
+        <p
+          class="profile-name"
+          :firstname="Profile.firstname"
+          :lastname="Profile.lastname"
+        >
           {{ Profile.firstname + " " + Profile.lastname }}
         </p>
         <p class="profile-email">{{ Profile.email }}</p>
@@ -15,7 +19,6 @@
 </template>
 
 <script>
-// import { defineComponent } from '@vue/composition-api'
 import { mapActions, mapGetters } from "vuex";
 export default {
   name: "app",
@@ -33,6 +36,10 @@ export default {
 
   methods: {
     ...mapActions(["fetchProfile", "fetchOneApp"]),
+
+    getProfilePhoto() {
+      return "Profile/ham.png";
+    },
   },
 
   async mounted() {

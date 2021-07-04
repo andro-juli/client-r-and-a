@@ -15,6 +15,7 @@ const getters = {
   StateForms: (state) => state.allForms,
   StateUser: (state) => state.user,
   // StateAllUsers: (state) => state.allusers,
+  getScores: (state) => state.scores,
   getProfile: (state) => state.profile,
   getOneApp: (state) => state.oneApp,
 };
@@ -126,6 +127,20 @@ const actions = {
       commit("setOneApp", response.data.data);
     } catch (error) {
       commit("setOneApp", error.response);
+    }
+  },
+
+  async Answers(UserInfo) {
+    try {
+      axios.defaults.headers.common["Authorization"] =
+        "Bearer" + this.state.token;
+      const response = await axios.post(
+        "http://localhost:3000/api/v1/users/scores",
+        UserInfo
+      );
+      console.log(response);
+    } catch (error) {
+      console.log(error.response);
     }
   },
 

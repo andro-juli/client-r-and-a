@@ -71,7 +71,7 @@ const routes = [
     meta: { requiresAuth: true },
     children: [
       {
-        path: ":id",
+        path: "users/:id",
         name: "dashboard-single-user",
         component: DashboardSingle,
       },

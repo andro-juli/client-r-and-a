@@ -59,8 +59,9 @@
               name="password"
               class="inputs"
               required="true"
+              pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+              title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
             />
-            <i><img src="../assets/eye.svg" alt="toggle-eye" class="eye"/></i>
           </div>
           <div class="input-container">
             <label for="" class="label">Confirm Passwrod</label>
@@ -104,6 +105,7 @@ export default {
       phone: "",
       password: "",
       confirm_password: "",
+      showPassword: false,
     };
   },
 
@@ -119,13 +121,23 @@ export default {
         confirm_password: this.confirm_password,
       };
       try {
-        await this.Signup(this.details);
+        const response = await this.Signup(this.details);
         console.log(this.details);
-        JSON.stringify(this.details);
-        this.$router.push("/login");
+        // JSON.stringify(this.details);
+        // this.$router.push("/login");
+        this.apiResponse(response);
         this.showError = false;
       } catch (error) {
         this.showError = true;
+      }
+    },
+
+    apiResponse(response) {
+      if (response.status == "success") {
+        setTimeout(() => {
+          this.$router.push({ name: "Login" });
+          response.message = "";
+        }, 8000);
       }
     },
   },

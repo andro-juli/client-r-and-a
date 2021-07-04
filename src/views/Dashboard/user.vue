@@ -3,7 +3,7 @@
     <div>
       <p>welcome to the user dashboard. i am in the user.vue file</p>
       <router-link
-        :to="{ name: 'dashboard-single-user', params: { id: 'salma' } }"
+        :to="{ name: 'dashboard-single-user', params: { id: 'sadik' } }"
         >salma</router-link
       >
       <router-link

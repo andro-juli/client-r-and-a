@@ -5,8 +5,18 @@
       <UserP />
       <div class="main-menu">
         <div>
-          <li><img src="../assets/dashboard.svg" alt="" /> Dashboard</li>
-          <li><img src="../assets/assessment.svg" alt="" />Assessment</li>
+          <li>
+            <img src="../assets/dashboard.svg" alt="" />
+            <router-link :to="{ name: 'SingleDashboard' }"
+              >Dashboard</router-link
+            >
+          </li>
+          <li>
+            <img src="../assets/assessment.svg" alt="" /><router-link
+              :to="{ name: 'Assessment' }"
+              >Assessment</router-link
+            >
+          </li>
         </div>
         <Logout />
       </div>
@@ -94,6 +104,9 @@ export default {
   line-height: 19px;
   color: #2b3c4e;
   padding: 10px;
+}
+a {
+  text-decoration: none;
 }
 .main-menu img {
   padding-right: 10px;
