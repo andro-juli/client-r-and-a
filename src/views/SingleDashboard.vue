@@ -40,7 +40,7 @@
             </p>
           </div>
           <div class="status-div">
-            <p class="date-status-text">Application Status</p>
+            <p class="app-status-text">Application Status</p>
             <p class="pending">Pending</p>
             <div class="orangeline"></div>
             <p class="update" style="margin-left: 25px;">
@@ -139,11 +139,6 @@ export default {
     async redirect() {
       this.$router.push("/");
     },
-
-    // handleFileUpload() {
-    //   const file = this.$refs.file.files[0];
-    //   this.files = file;
-    // },
   },
 
   async mounted() {
@@ -238,15 +233,35 @@ li {
 .date-status {
   display: flex;
 }
+.date-status-text {
+  font-family: Lato;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  color: #4f4f4f;
+  margin-left: 20px;
+}
+.app-status-text {
+  font-family: Lato;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  color: #4f4f4f;
+  margin-left: 30px;
+}
 .blueline {
   border: 2px solid #006df0;
-  width: 150px;
+  width: 160px;
   margin-left: 20px;
+  margin-bottom: 10px;
 }
 .orangeline {
   border: 2px solid #f09000;
   width: 150px;
   margin-left: 27px;
+  margin-bottom: 10px;
 }
 .text-layout {
   padding-top: 2rem;
@@ -293,15 +308,7 @@ li {
   text-align: center;
   color: #2b3c4e;
 }
-.date-status-text {
-  font-family: Lato;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 17px;
-  text-align: center;
-  color: #4f4f4f;
-}
+
 .update {
   font-family: Lato;
   font-style: normal;

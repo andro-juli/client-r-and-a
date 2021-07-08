@@ -228,74 +228,20 @@ export default {
       console.log(form);
       try {
         await this.CreateForm(form);
+        alert("Application submitted successfully");
         this.$router.push("singledashboard");
       } catch (error) {
         throw "Sorry you can't fill a form now";
       }
     },
   },
-
-  // data() {
-  //   return {
-  //     firstname: "",
-  //     lastname: "",
-  //     email: "",
-  //     DOB: "",
-  //     address: "",
-  //     university: "",
-  //     program: "",
-  //     CGPA: "",
-  //   };
-  // },
-
-  // methods: {
-  //   async createForm() {
-  //     const newForm = {
-  //       firstname: this.firstname,
-  //       lastname: this.lastname,
-  //       email: this.email,
-  //       DOB: this.DOB,
-  //       address: this.address,
-  //       university: this.university,
-  //       program: this.program,
-  //       CGPA: this.CGPA,
-  //     };
-  //     this.firstname = "";
-  //     this.lastname = "";
-  //     this.email = "";
-  //     this.DOB = "";
-  //     this.address = "";
-  //     this.university = "";
-  //     this.program = "";
-  //     this.CGPA = "";
-
-  //     const data = JSON.stringify(newForm);
-
-  //     const response = await fetch("/api/v1/forms", {
-  //       method: "POST",
-  //       mode: "cors",
-  //       cache: "no-cache",
-  //       credentials: "same-origin",
-  //       headers: {
-  //         "Content-type": "application/json",
-  //         Accept: "application/json",
-  //       },
-  //       body: data,
-  //     });
-  //     console.log(response);
-  //     if (response.status === 201) {
-  //       alert("Application submitted successfully");
-  //       window.location.href = "/";
-  //     } else {
-  //       alert("error occured while submitting application");
-  //     }
-  //     return response.json();
-  //   },
-  // },
 };
 </script>
 
 <style scoped>
+*:focus {
+  outline: none;
+}
 .app-form {
   background: #fdfdff;
 }
@@ -412,6 +358,7 @@ label {
   font-size: 16px;
   line-height: 19px;
   color: #ffffff;
+  border: none;
   display: flex;
   align-items: center;
   justify-content: center;

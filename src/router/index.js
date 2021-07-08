@@ -9,7 +9,10 @@ import Assessment from "../views/Assessment.vue";
 import Questions from "../views/questions.vue";
 import Successful from "../views/successful.vue";
 import Application_form from "../views/Application_form.vue";
-// import SingleDashboard from "../views/SingleDashboard.vue";
+import AdminLogin from "../views/AdminLogin.vue";
+import ResetP from "../views/ResetP.vue";
+import Entries from "../views/EntriesAdmin.vue";
+import History from "../views/History.vue";
 import store from "../store";
 
 Vue.use(VueRouter);
@@ -63,6 +66,27 @@ const routes = [
     name: "Application_form",
     component: Application_form,
     meta: { requiresAuth: true },
+  },
+  {
+    path: "/reset_password",
+    name: "ResetP",
+    component: ResetP,
+    // meta: { requiresAuth: true },
+  },
+  {
+    path: "/adminLogin",
+    name: "AdminLogin",
+    component: AdminLogin,
+  },
+  {
+    path: "/entries",
+    name: "Entries",
+    component: Entries,
+  },
+  {
+    path: "/history",
+    name: "History",
+    component: History,
   },
   {
     path: "/dashboard",

@@ -78,50 +78,20 @@ export default {
       // localStorage.setItem("user", JSON.stringify(this.User));
       try {
         await this.LogIn(this.User);
-
+        alert("Successfully Logged In");
         this.$router.push("/application_form");
       } catch (error) {
         this.showError = true;
       }
     },
   },
-
-  // methods: {
-  //   // async loginUser() {
-  //   //   const email = document.getElementById("email").value;
-  //   //   const password = document.getElementById("pword").value;
-  //   //   const data = JSON.stringify({ email, password });
-  //   //   const response = await fetch("/api/v1/users/login", {
-  //   //     method: "POST",
-  //   //     mode: "cors",
-  //   //     cache: "no-cache",
-  //   //     credentials: "same-origin",
-  //   //     headers: {
-  //   //       "Content-type": "application/json",
-  //   //       Accept: "application/json",
-  //   //     },
-  //   //     body: data,
-  //   //   });
-  //   //   console.log(response);
-  //   //   const userDetails = await response.json();
-  //   //   if (response.status === 200) {
-  //   //     alert(
-  //   //       "Successfully login in, go back to home and start your application"
-  //   //     );
-  //   //     // localStorage.setItem("token", userDetails.data.token);
-  //   //     // this.$store.dispatch("user", userDetails.data);
-  //   //     // this.$router.push("/");
-  //   //     // console.log(userDetails.data.token);
-  //   //   } else {
-  //   //     alert("error occured: Invalid username or password");
-  //   //   }
-  //   //   console.log(userDetails);
-  //   // },
-  // },
 };
 </script>
 
 <style scoped>
+*:focus {
+  outline: none;
+}
 #login {
   background: #ffffff;
   height: 100vh;
@@ -202,6 +172,7 @@ export default {
   font-size: 16px;
   line-height: 19px;
   color: #ffffff;
+  border: none;
 }
 .redirect {
   display: flex;

@@ -64,7 +64,7 @@
             />
           </div>
           <div class="input-container">
-            <label for="" class="label">Confirm Passwrod</label>
+            <label for="" class="label">Confirm Password</label>
             <input
               v-model="confirm_password"
               type="password"
@@ -121,67 +121,33 @@ export default {
         confirm_password: this.confirm_password,
       };
       try {
-        const response = await this.Signup(this.details);
+        await this.Signup(this.details);
         console.log(this.details);
-        // JSON.stringify(this.details);
-        // this.$router.push("/login");
-        this.apiResponse(response);
+        alert("Signup Is successful");
+        this.$router.push("/login");
+
         this.showError = false;
       } catch (error) {
         this.showError = true;
       }
     },
 
-    apiResponse(response) {
-      if (response.status == "success") {
-        setTimeout(() => {
-          this.$router.push({ name: "Login" });
-          response.message = "";
-        }, 8000);
-      }
-    },
+    // apiResponse(response) {
+    //   if (response.status == "success") {
+    //     setTimeout(() => {
+    //       this.$router.push({ name: "Login" });
+    //       response.message = "";
+    //     }, 8000);
+    //   }
+    // },
   },
-
-  // methods: {
-  //   async signupUser() {
-  //     const newUser = {
-  //       firstname: this.firstname,
-  //       lastname: this.lastname,
-  //       email: this.email,
-  //       phone: this.phone,
-  //       password: this.password,
-  //       confirm_password: this.confirm_password,
-  //     };
-
-  //     const data = JSON.stringify(newUser);
-
-  //     const url = "/api/v1/users/signup";
-
-  //     const response = await fetch(url, {
-  //       method: "POST",
-  //       mode: "cors",
-  //       cache: "no-cache",
-  //       credentials: "same-origin",
-  //       headers: {
-  //         "Content-type": "application/json",
-  //         Accept: "application/json",
-  //       },
-  //       body: data,
-  //     });
-  //     console.log(response);
-  //     if (response.status === 201) {
-  //       alert("Successfully signed up, you can login now");
-  //       this.$router.push("Login");
-  //     } else {
-  //       alert("error occured while signing up");
-  //     }
-  //     return response.json();
-  //   },
-  // },
 };
 </script>
 
 <style scoped>
+*:focus {
+  outline: none;
+}
 #signup {
   background: #ffffff;
   height: 100vh;
@@ -253,6 +219,7 @@ export default {
   font-size: 16px;
   line-height: 19px;
   color: #ffffff;
+  border: none;
 }
 .signup-btn-container {
   width: 100%;

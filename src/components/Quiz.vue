@@ -270,7 +270,7 @@ input[type="radio"] {
   width: 60%;
   height: 45vh;
   margin: auto;
-  border: 1px solid black;
+  /* border: 1px solid black; */
 }
 .slide-container h4 {
   font-family: Lato;

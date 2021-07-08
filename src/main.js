@@ -3,6 +3,15 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import axios from "axios";
+import { BootstrapVue } from "bootstrap-vue";
+import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap-vue/dist/bootstrap-vue.css";
+import SidebarModal from "vue-sidebar-modal";
+// @import "~vue-sidebar-modal/dist/vue-sidebar-modal";
+
+Vue.use(SidebarModal);
+
+Vue.use(BootstrapVue);
 
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = "http://localhost:5005/api/v1/";
