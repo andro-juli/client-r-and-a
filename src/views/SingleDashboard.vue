@@ -35,7 +35,7 @@
             <p class="date-status-text">Date of Application</p>
             <p class="pending">{{ getDate(SingleApp.created_at) }}</p>
             <div class="blueline"></div>
-            <p class="update" style="margin-left: 20px;">
+            <p class="update">
               {{ getDiffDate(SingleApp.created_at) }}
             </p>
           </div>
@@ -43,7 +43,7 @@
             <p class="app-status-text">Application Status</p>
             <p class="pending">Pending</p>
             <div class="orangeline"></div>
-            <p class="update" style="margin-left: 25px;">
+            <p class="update">
               We will get back to you
             </p>
           </div>
@@ -116,7 +116,6 @@ export default {
     getDate(s) {
       if (s != null) {
         var datet = s.split("T");
-        // return datet[0];
         var ans = datet[0];
         return moment(ans).format("DD.MM.YY");
       } else {
@@ -232,6 +231,7 @@ li {
 
 .date-status {
   display: flex;
+  height: 25vh;
 }
 .date-status-text {
   font-family: Lato;
@@ -240,7 +240,6 @@ li {
   font-size: 14px;
   line-height: 17px;
   color: #4f4f4f;
-  margin-left: 20px;
 }
 .app-status-text {
   font-family: Lato;
@@ -249,23 +248,21 @@ li {
   font-size: 14px;
   line-height: 17px;
   color: #4f4f4f;
-  margin-left: 30px;
 }
 .blueline {
   border: 2px solid #006df0;
   width: 160px;
-  margin-left: 20px;
+
   margin-bottom: 10px;
 }
 .orangeline {
   border: 2px solid #f09000;
   width: 150px;
-  margin-left: 27px;
   margin-bottom: 10px;
 }
 .text-layout {
   padding-top: 2rem;
-  height: 25vh;
+  height: 20vh;
 }
 .text-layout h2 {
   font-family: Lato;
@@ -290,22 +287,18 @@ li {
   margin: auto;
 }
 .date-div {
-  width: 220px;
-  height: 15vh;
-
   margin-right: 50px;
 }
-.status-div {
-  width: 220px;
-  height: 15vh;
-}
+/* .status-div {
+  border: 1px solid green;
+} */
 .pending {
   font-family: Lato;
   font-style: normal;
   font-weight: 300;
-  font-size: 48px;
-  line-height: 58px;
-  text-align: center;
+  font-size: 45px;
+  line-height: 50px;
+
   color: #2b3c4e;
 }
 
@@ -333,25 +326,25 @@ li {
 }
 .updates-layout {
   width: 45%;
-  height: 440px;
+  height: 420px;
   border: 1px solid #ececf9;
   box-sizing: border-box;
   border-radius: 4px;
-  padding: 30px;
+  padding: 20px;
 }
 .take-assessment-layout {
   width: 45%;
-  height: 440px;
+  height: 420px;
   border: 1px solid #ececf9;
   box-sizing: border-box;
   border-radius: 4px;
-  padding: 30px;
+  padding: 20px;
 }
 .greyline {
   width: 95%;
   height: 0px;
   border: 1px solid #cecece;
-  margin-top: 5rem;
+  margin-top: 4.5rem;
 }
 .ass-btn {
   background: #b1b1b1;
@@ -367,13 +360,21 @@ li {
   color: #ffffff;
 }
 .take-assessment-body {
-  width: 90%;
+  width: 100%;
   height: 300px;
-
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 20px;
+}
+.take-assessment-body p {
+  font-family: Lato;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16.7273px;
+  line-height: 20px;
+  text-align: center;
+  color: #4f4f4f;
 }
 </style>

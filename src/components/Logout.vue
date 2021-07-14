@@ -22,7 +22,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .logout-div {
   margin-top: 20px;
 }

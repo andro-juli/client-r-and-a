@@ -131,15 +131,6 @@ export default {
         this.showError = true;
       }
     },
-
-    // apiResponse(response) {
-    //   if (response.status == "success") {
-    //     setTimeout(() => {
-    //       this.$router.push({ name: "Login" });
-    //       response.message = "";
-    //     }, 8000);
-    //   }
-    // },
   },
 };
 </script>

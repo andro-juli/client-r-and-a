@@ -13,6 +13,7 @@ import AdminLogin from "../views/AdminLogin.vue";
 import ResetP from "../views/ResetP.vue";
 import Entries from "../views/EntriesAdmin.vue";
 import History from "../views/History.vue";
+import ResultAdmin from "../views/Result.vue";
 import store from "../store";
 
 Vue.use(VueRouter);
@@ -87,6 +88,11 @@ const routes = [
     path: "/history",
     name: "History",
     component: History,
+  },
+  {
+    path: "/result",
+    name: "Result",
+    component: ResultAdmin,
   },
   {
     path: "/dashboard",

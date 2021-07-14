@@ -7,15 +7,17 @@ const state = {
   allusers: [],
   allForms: [],
   questions: [],
+  mytable: [],
   profile: "",
   oneApp: "",
+  score: "",
 };
 const getters = {
   isAuthenticated: (state) => !!state.user,
   StateForms: (state) => state.allForms,
   StateUser: (state) => state.user,
   // StateAllUsers: (state) => state.allusers,
-  getScores: (state) => state.scores,
+  getScores: (state) => state.score,
   getProfile: (state) => state.profile,
   getOneApp: (state) => state.oneApp,
 };
@@ -27,12 +29,18 @@ const mutations = {
   setProfile(state, user) {
     state.profile = user;
   },
-
   setForms(state, allForms) {
     state.allForms = allForms;
   },
   setQuestions(state, questions) {
     state.questions = questions;
+  },
+
+  setTable(state, mytable) {
+    state.mytable = mytable;
+  },
+  setScore(state, score) {
+    state.score = score;
   },
   setSignedupUser(state, details) {
     state.details = details;
@@ -68,7 +76,6 @@ const actions = {
 
   async LogIn({ commit }, UserInfo) {
     const response = await axios.post("users/login", UserInfo);
-    // JSON.stringify(UserInfo);
     const token = await response.data.data.token;
     localStorage.setItem("access_token", JSON.stringify(token));
     console.log(token);
@@ -77,10 +84,6 @@ const actions = {
     const user = await response.data.data.user.id;
     localStorage.setItem("userP", JSON.stringify(user));
     commit("setUser", user);
-
-    // const user = response.data.data;
-    // localStorage.setItem("user", JSON.stringify(user));
-    // commit("setUser", user);
   },
 
   async GetAllUsers({ commit }, users) {
@@ -94,12 +97,19 @@ const actions = {
   },
 
   async GetForms({ commit }, formdata) {
-    let response = await axios.get("forms", formdata);
+    const response = await axios.get("forms", formdata);
     commit("setForms", response.data);
   },
+
   async GetQuestions({ commit }, questiondata) {
     let response = await axios.get("admin/questions", questiondata);
     commit("setQuestions", response.data);
+  },
+
+  async GetTable({ commit }, formdata) {
+    let response = await axios.get("forms/table", formdata);
+    console.log(response);
+    commit("setTable", response.data);
   },
 
   async fetchProfile({ commit }) {
@@ -130,17 +140,15 @@ const actions = {
     }
   },
 
-  async Answers(UserInfo) {
+  async Answers({ commit }, UserInfo) {
     try {
       axios.defaults.headers.common["Authorization"] =
         "Bearer" + this.state.token;
-      const response = await axios.post(
-        "http://localhost:3000/api/v1/users/scores",
-        UserInfo
-      );
+      const response = await axios.post("users/scores", UserInfo);
       console.log(response);
+      commit("setScore", response.data);
     } catch (error) {
-      console.log(error.response);
+      commit("setScore", error.response);
     }
   },
 

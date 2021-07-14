@@ -5,11 +5,7 @@
         <img :src="getProfilePhoto()" alt="" />
       </div>
       <div class="username">
-        <p
-          class="profile-name"
-          :firstname="Profile.firstname"
-          :lastname="Profile.lastname"
-        >
+        <p class="profile-name" :user_id="Profile.id">
           {{ Profile.firstname + " " + Profile.lastname }}
         </p>
         <p class="profile-email">{{ Profile.email }}</p>
@@ -29,6 +25,7 @@ export default {
       files: "",
     };
   },
+  props: ["user_id"],
 
   computed: {
     ...mapGetters(["getProfile", "StateUser", "getOneApp"]),
@@ -53,7 +50,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .profile-layout {
   width: 100%;
   height: 255px;

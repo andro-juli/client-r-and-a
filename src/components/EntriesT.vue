@@ -27,7 +27,12 @@
       </tbody>
     </table>
 
-    <div class="modal-overlay" v-if="showModal" @click="showModal = true">
+    <div
+      class="modal-overlay"
+      v-if="showModal"
+      @click="showModal = true"
+      @dblclick="showModal = false"
+    >
       <transition name="fade" appear>
         <div class="modal-cont">
           <Modal :entry="singleEntry" />
@@ -68,7 +73,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 table {
   width: 90%;
   margin: auto;

@@ -2,7 +2,7 @@
   <div class="quiz">
     <div class="quiz-cont">
       <div class="slide-container">
-        <carousel :per-page="1" :paginationEnabled="false" ref="productDetails">
+        <carousel :per-page="1" :paginationEnabled="false">
           <!-- <div>  :navigation-next-label="nextLabel"
         :navigation-prev-label="prevLabel"</div> -->
           <slide
@@ -19,7 +19,7 @@
                     <div class="dot-div-container">
                       <div class="dot-div"></div>
                     </div>
-                    <label for="radinput" class="optn">
+                    <label class="optn">
                       <!-- bind the options to the array index of the answers array that matches this index -->
                       <input
                         type="radio"
@@ -82,9 +82,9 @@
             </div>
           </slide>
         </carousel>
-        <!-- <span v-if="questionindex == questions.length"
-        >Your total score is {{ score }} / {{ questions.length }}</span
-      > -->
+        <span v-if="questionindex == questions.length"
+          >Your total score is {{ user_score }} / {{ questions.length }}</span
+        >
       </div>
       <div class="btn-container">
         <div>
@@ -118,10 +118,8 @@
 
 <script>
 import { Carousel, Slide } from "vue-carousel";
-import { mapState } from "vuex";
+import { mapGetters } from "vuex";
 import { mapActions } from "vuex";
-
-// var quiz_qsts = this.$store.state.auth.questions.data;
 
 export default {
   name: "Quiz",
@@ -133,8 +131,9 @@ export default {
   data: () => {
     return {
       questionindex: 0,
-
-      // score: "",
+      profile: [],
+      user_id: "",
+      score: "",
     };
   },
 
@@ -142,10 +141,15 @@ export default {
     this.$store.dispatch("GetQuestions");
 
     await this.timed();
+
+    await this.fetchProfile();
+    this.profile = await this.getProfile;
+    const result = JSON.stringify(this.profile[0].id);
+    console.log("what from profile" + result);
   },
 
   methods: {
-    ...mapActions(["Answers"]),
+    ...mapActions(["Answers", "fetchProfile"]),
 
     next: function() {
       this.questionindex++;
@@ -161,9 +165,15 @@ export default {
     endQuiz() {
       this.time = 0;
       this.$router.push({ name: "Successful" });
-      var result = JSON.stringify("score", this.score);
-      this.Answers(result);
-      console.log(result);
+      this.score = this.user_score;
+      this.user_id = this.profile[0].id;
+      console.log("hey" + this.user_id);
+      this.UserInfo = {
+        user_id: this.user_id,
+        score: this.score,
+      };
+      this.Answers(JSON.stringify(this.UserInfo));
+      console.log("payload" + JSON.stringify(this.UserInfo));
     },
 
     countdown() {
@@ -176,13 +186,13 @@ export default {
   },
 
   computed: {
-    ...mapState(["setQuestions"]),
+    ...mapGetters(["setQuestions", "getProfile"]),
     questions() {
       return this.$store.state.auth.questions.data;
     },
 
     // Calculate total score of quiz person
-    score: function() {
+    user_score: function() {
       var total = 0;
       for (var i = 0; i < this.answers.length; i++) {
         if (this.answers[i] == this.questions[i].correct_answer) {
@@ -214,7 +224,7 @@ export default {
 .quiz-cont {
   margin-top: 50px;
   width: 60%;
-  height: 55vh;
+  height: 70vh;
 }
 ul {
   width: 100%;
@@ -246,10 +256,9 @@ label {
 }
 #radinput {
   position: relative;
-  left: -156px;
 }
 input[type="radio"] {
-  visibility: hidden;
+  /* visibility: hidden; */
   width: 8px;
   height: 8px;
   border: none;
@@ -270,7 +279,6 @@ input[type="radio"] {
   width: 60%;
   height: 45vh;
   margin: auto;
-  /* border: 1px solid black; */
 }
 .slide-container h4 {
   font-family: Lato;
@@ -285,11 +293,10 @@ input[type="radio"] {
 .options-container {
   display: flex;
   width: 100%;
-  height: 30vh;
+
   padding: 3px;
   justify-content: space-evenly;
   align-items: center;
-  /* border: 1px solid red; */
 }
 
 .qst-text {
@@ -327,9 +334,10 @@ input[type="radio"] {
   align-items: center;
 }
 .btn-container {
-  width: 100%;
+  width: 95%;
   display: flex;
   justify-content: space-between;
+  margin-bottom: 30px;
 }
 #next {
   width: 125px;
@@ -356,7 +364,9 @@ input[type="radio"] {
   line-height: 19px;
   color: #211f26;
 }
-
+.finish {
+  height: 200px;
+}
 .finish-btn {
   width: 205px;
   height: 41px;

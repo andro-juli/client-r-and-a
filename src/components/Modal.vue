@@ -54,16 +54,14 @@
         </div>
       </div>
       <div class="btns-cont">
-        <button class="approve-btn" @click="toggleM">Approve</button>
+        <button class="approve-btn" @click="toggleM">
+          Approve
+        </button>
         <button class="decline-btn">Decline</button>
       </div>
     </div>
 
-    <div
-      class="submodal-overlay"
-      v-if="showSubModal"
-      @click="showSubModal = true"
-    >
+    <div class="submodal-overlay" v-if="showSubModal">
       <transition name="slide" appear>
         <div class="submodal-cont">
           <div class="yes_no-cont ">
@@ -72,7 +70,9 @@
               this application?
             </p>
             <div class="submodal-btns-cont">
-              <button class="approve-btn">Yes</button>
+              <button class="approve-btn" @click="showSubModal = false">
+                Yes
+              </button>
               <button class="decline-btn">No</button>
             </div>
           </div>
@@ -109,7 +109,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .mymodal {
   padding: 25px;
   display: grid;

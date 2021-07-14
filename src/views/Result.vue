@@ -21,14 +21,14 @@
         </p>
       </div>
       <div class="table-cont">
-        <EntriesT />
+        <Result />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import EntriesT from "@/components/EntriesT.vue";
+import Result from "@/components/Result.vue";
 import AdminP from "@/components/AdminP.vue";
 import AdminD from "@/components/AdminD.vue";
 
@@ -37,7 +37,7 @@ export default {
   components: {
     AdminP,
     AdminD,
-    EntriesT,
+    Result,
   },
 };
 </script>
@@ -95,7 +95,6 @@ select {
   width: 95%;
   height: 476px;
   background: #fdfdff;
-  box-shadow: 0px 5px 15px rgba(33, 31, 38, 0.05);
   border-radius: 8px;
   margin: auto;
 }
